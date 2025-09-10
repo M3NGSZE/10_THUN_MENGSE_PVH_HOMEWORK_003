@@ -1,5 +1,6 @@
 package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,10 @@ import com.example.a10_thun_mengse_pvh_homework_003.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Topbar(isShow: () -> Unit){
+fun Topbar(
+    isShow: () -> Unit,
+    another: () -> Unit
+){
     TopAppBar(
         title = {
             Row (
@@ -72,7 +76,11 @@ fun Topbar(isShow: () -> Unit){
             Spacer(modifier = Modifier.width(15.dp))
 
             IconButton(
-                onClick = {} ,
+                onClick = {
+//                    another(true)
+                    another()
+                    Log.d("trash","$isShow")
+                } ,
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(Color(0xFFF0F0F0))

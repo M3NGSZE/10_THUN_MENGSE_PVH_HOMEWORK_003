@@ -3,10 +3,7 @@ package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,6 +48,7 @@ fun PopUpDialog(isShow: (Boolean) -> Unit){
             MyButton(
                 title ="Save",
                 onOff = isSave,
+                textColor = 0xFF3F51B5,
                 isShow = { isShow(it) }
                 ){
 
@@ -61,6 +58,7 @@ fun PopUpDialog(isShow: (Boolean) -> Unit){
         dismissButton =  {
             MyButton(
                 title ="Cancel",
+                textColor = 0xFF3F51B5,
                 isShow = { isShow(it) }
             ){  }
         },
@@ -81,33 +79,4 @@ fun MyTextField(
         onValueChange = {it -> value = it.trim()},
         label = { Text(text = title) },
     )
-}
-
-@Composable
-fun MyButton(
-    title: String,
-    onOff: Boolean = true,
-    isShow: (Boolean) -> Unit,
-    save: () -> Unit
-){
-    Button(
-        modifier = Modifier
-            .width(95.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Transparent,
-            contentColor = Color.Blue,
-            disabledContainerColor = Color.Transparent
-        ),
-        enabled = onOff,
-        onClick = {
-            if (title == "Cancel"){
-                isShow(false)
-            }else if(title == "Save"){
-                isShow(false)
-                save()
-            }
-        }
-    ) {
-        Text(text = title)
-    }
 }
