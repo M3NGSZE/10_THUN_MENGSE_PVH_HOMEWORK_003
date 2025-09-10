@@ -48,7 +48,7 @@ fun Topbar(isShow: () -> Unit){
                 Spacer(modifier = Modifier.width(15.dp))
 
                 Column {
-                    Text("Robert reynolds")
+                    Text("Robert Reynolds")
                     Text("Szentry", fontSize = 15.sp)
                 }
             }
@@ -80,6 +80,7 @@ fun Topbar(isShow: () -> Unit){
                 Icon(
                     imageVector = Icons.Rounded.Delete,
                     contentDescription = "Delete",
+                    tint = Color(0xFFFF5722),
                     modifier = Modifier.size(35.dp)
                 )
             }

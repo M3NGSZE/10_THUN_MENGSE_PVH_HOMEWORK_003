@@ -27,6 +27,9 @@ fun PopUpDialog(isShow: (Boolean) -> Unit){
     val isSave = !(title.isBlank() || note.isBlank())
 
     AlertDialog(
+        onDismissRequest = {
+            isShow(false)
+        },
         title = {
             Text(
                 text = "Create New Note",
@@ -44,10 +47,7 @@ fun PopUpDialog(isShow: (Boolean) -> Unit){
                     MyTextField("Note"){ note = it}
                 }
             }
-
-
         },
-        onDismissRequest ={},
         confirmButton = {
             MyButton(
                 title ="Save",
