@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.example.a10_thun_mengse_pvh_homework_003.ui.components.BookMark
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.PopUpDel
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.PopUpDialog
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.Topbar
@@ -19,7 +20,8 @@ fun HomeScreen(){
 
     var title by remember { mutableStateOf("") }
     var show by remember {mutableStateOf(false)}
-    var showDel by remember {mutableStateOf(true)}
+    var showDel by remember {mutableStateOf(false)}
+    var bookMark by remember { mutableStateOf(true) }
 
     Scaffold (
         topBar = {
@@ -41,6 +43,10 @@ fun HomeScreen(){
 
             if (showDel){
                 PopUpDel{showDel = it}
+            }
+
+            if (bookMark){
+                BookMark()
             }
 
 
