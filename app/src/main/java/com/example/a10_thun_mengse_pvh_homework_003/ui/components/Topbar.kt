@@ -31,7 +31,7 @@ import com.example.a10_thun_mengse_pvh_homework_003.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Topbar(){
+fun Topbar(isShow: () -> Unit){
     TopAppBar(
         title = {
             Row (
@@ -55,7 +55,9 @@ fun Topbar(){
         },
         actions = {
             IconButton(
-                onClick = {} ,
+                onClick = {
+                    isShow()
+                } ,
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(Color(0xFFF0F0F0))

@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun PopUpDialog(){
+fun PopUpDialog(isShow: (Boolean) -> Unit){
     var title by remember { mutableStateOf("") }
     var note by remember { mutableStateOf("") }
-    val isSave = if (title.isBlank() || note.isBlank()) false else true
+    val isSave = !(title.isBlank() || note.isBlank())
 
     AlertDialog(
         title = {
@@ -37,11 +37,11 @@ fun PopUpDialog(){
         text =  {
             Column {
                 Column {
-                    MyTextField("Title"){}
+                    MyTextField("Title"){ title = it}
 
                     Spacer(modifier = Modifier.height(15.dp))
 
-                    MyTextField("Note"){}
+                    MyTextField("Note"){ note = it}
                 }
             }
 
@@ -49,11 +49,20 @@ fun PopUpDialog(){
         },
         onDismissRequest ={},
         confirmButton = {
-            MyButton("Save", isSave)
+            MyButton(
+                title ="Save",
+                onOff = isSave,
+                isShow = { isShow(it) }
+                ){
+
+            }
         },
 
         dismissButton =  {
-            MyButton("Cancel",)
+            MyButton(
+                title ="Cancel",
+                isShow = { isShow(it) }
+            ){  }
         },
     )
 }
@@ -77,7 +86,9 @@ fun MyTextField(
 @Composable
 fun MyButton(
     title: String,
-    onOff: Boolean = true
+    onOff: Boolean = true,
+    isShow: (Boolean) -> Unit,
+    save: () -> Unit
 ){
     Button(
         modifier = Modifier
@@ -89,7 +100,12 @@ fun MyButton(
         ),
         enabled = onOff,
         onClick = {
-
+            if (title == "Cancel"){
+                isShow(false)
+            }else if(title == "Save"){
+                isShow(false)
+                save()
+            }
         }
     ) {
         Text(text = title)
