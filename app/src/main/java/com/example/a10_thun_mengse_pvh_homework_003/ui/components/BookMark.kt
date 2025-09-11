@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a10_thun_mengse_pvh_homework_003.R
@@ -104,8 +105,9 @@ fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel){
                 Spacer(modifier = Modifier.height(15.dp))
 
                 Text(
-                    text = "${bookMark.content}...",
-                    maxLines = 3
+                    text = bookMark.content,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }

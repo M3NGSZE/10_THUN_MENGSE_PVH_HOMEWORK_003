@@ -1,5 +1,6 @@
 package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
@@ -113,7 +115,6 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
             )
         }
     }
-
-    MyBottomSheet(noteViewModel, isShow)
+    MyBottomSheet(noteViewModel, isShow, item.id){isShow = it}
 
 }
