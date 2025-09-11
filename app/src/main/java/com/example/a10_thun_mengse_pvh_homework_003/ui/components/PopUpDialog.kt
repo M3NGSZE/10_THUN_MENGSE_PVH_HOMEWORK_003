@@ -40,7 +40,7 @@ fun PopUpDialog(isShow: (Boolean) -> Unit){
 
                     Spacer(modifier = Modifier.height(15.dp))
 
-                    MyTextField("Note"){ note = it}
+                    MyTextField("Content"){ note = it}
                 }
             }
         },

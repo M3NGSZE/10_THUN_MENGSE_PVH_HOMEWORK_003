@@ -10,5 +10,6 @@ data class Note(
     val id: Long = 0,
     val title: String,
     val note: String,
-    val date: LocalDate
+    val date: LocalDate,
+    val mark: Boolean = false
 )

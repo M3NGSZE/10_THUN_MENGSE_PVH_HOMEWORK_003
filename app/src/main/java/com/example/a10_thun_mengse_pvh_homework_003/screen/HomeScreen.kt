@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.BookMark
+import com.example.a10_thun_mengse_pvh_homework_003.ui.components.NoteList
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.PopUpDel
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.PopUpDialog
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.Topbar
@@ -48,6 +49,8 @@ fun HomeScreen(){
             if (bookMark){
                 BookMark()
             }
+
+            NoteList()
 
 
         }
