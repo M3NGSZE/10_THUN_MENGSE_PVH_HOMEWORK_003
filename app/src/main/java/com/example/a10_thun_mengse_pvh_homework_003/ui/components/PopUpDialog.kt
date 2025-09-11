@@ -15,12 +15,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.a10_thun_mengse_pvh_homework_003.helper.dateConverter
+import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
+import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
 @Composable
-fun PopUpDialog(isShow: (Boolean) -> Unit){
+fun PopUpDialog(noteViewModel: NoteViewModel, isShow: (Boolean) -> Unit){
+
     var title by remember { mutableStateOf("") }
     var note by remember { mutableStateOf("") }
     val isSave = !(title.isBlank() || note.isBlank())
+    val date = dateConverter()
+
+    val newNote = Note(title = title, content = note, date = date)
 
     AlertDialog(
         onDismissRequest = {
@@ -49,7 +56,10 @@ fun PopUpDialog(isShow: (Boolean) -> Unit){
                 title ="Save",
                 onOff = isSave,
                 textColor = 0xFF3F51B5,
-                isShow = { isShow(it) }
+                isShow = {
+                    isShow(it)
+                    noteViewModel.insertNote(newNote)
+                }
                 ){
 
             }
@@ -72,11 +82,10 @@ fun MyTextField(
     setValue: (String) -> Unit
 ){
     var value by remember { mutableStateOf("") }
-    setValue(value)
-
+    setValue(value.trim())
     OutlinedTextField(
         value = value,
-        onValueChange = {it -> value = it.trim()},
+        onValueChange = {it -> value = it},
         label = { Text(text = title) },
     )
 }

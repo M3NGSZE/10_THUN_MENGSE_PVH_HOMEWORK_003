@@ -15,9 +15,10 @@ import com.example.a10_thun_mengse_pvh_homework_003.ui.components.NoteList
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.PopUpDel
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.PopUpDialog
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.Topbar
+import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(noteViewModel: NoteViewModel){
 
     var title by remember { mutableStateOf("") }
     var show by remember {mutableStateOf(false)}
@@ -39,7 +40,7 @@ fun HomeScreen(){
         ){
 
             if (show){
-                PopUpDialog(){ show = it}
+                PopUpDialog(noteViewModel){ show = it}
             }
 
             if (showDel){
@@ -50,7 +51,7 @@ fun HomeScreen(){
                 BookMark()
             }
 
-            NoteList()
+            NoteList(noteViewModel)
 
 
         }

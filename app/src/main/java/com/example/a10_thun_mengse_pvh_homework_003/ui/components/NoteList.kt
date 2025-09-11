@@ -27,24 +27,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.a10_thun_mengse_pvh_homework_003.helper.dateConverter
 import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
+import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 import java.time.LocalDate
 
 @Composable
-fun NoteList(){
+fun NoteList(noteViewModel: NoteViewModel){
+
+    val currentDate = dateConverter()
+
     val noted = remember {
         mutableStateListOf(
             Note(
                 id = 1L,
                 title = "Sentry Project",
-                note = "The Sentry and The Void are respectively a superhero and supervillain appearing in American comic books published by Marvel Comics. Created by Paul Jenkins and Jae Lee, with uncredited conceptual contributions by Rick Veitch, the characters first appeared in The Sentry #1.",
-                date = LocalDate.now()
+                content = "The Sentry and The Void are respectively a superhero and supervillain appearing in American comic books published by Marvel Comics. Created by Paul Jenkins and Jae Lee, with uncredited conceptual contributions by Rick Veitch, the characters first appeared in The Sentry #1.",
+                date = currentDate
             ),
             Note(
                 id = 2L,
                 title = "Man of tomorrow",
-                note = "Superman is a superhero created by writer Jerry Siegel and artist Joe Shuster, first appearing in issue #1 of Action Comics, published in the United States on April 18, 1938.",
-                date = LocalDate.now()
+                content = "Superman is a superhero created by writer Jerry Siegel and artist Joe Shuster, first appearing in issue #1 of Action Comics, published in the United States on April 18, 1938.",
+                date = currentDate
             ),
         )
     }
@@ -97,7 +102,7 @@ fun ColumnNote(item: Note){
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = item.note,
+                text = item.content,
             )
 
             Spacer(modifier = Modifier.height(16.dp))

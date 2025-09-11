@@ -36,24 +36,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a10_thun_mengse_pvh_homework_003.R
+import com.example.a10_thun_mengse_pvh_homework_003.helper.dateConverter
 import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookMark(){
+
+    val currentDate = dateConverter()
+
     val bookMarkNote = remember {
+
         mutableStateListOf(
             Note(
                 id = 1L,
                 title = "Sentry Project",
-                note = "The Sentry and The Void are respectively a superhero and supervillain appearing in American comic books published by Marvel Comics. Created by Paul Jenkins and Jae Lee, with uncredited conceptual contributions by Rick Veitch, the characters first appeared in The Sentry #1.",
-                date = LocalDate.now()
+                content = "The Sentry and The Void are respectively a superhero and supervillain appearing in American comic books published by Marvel Comics. Created by Paul Jenkins and Jae Lee, with uncredited conceptual contributions by Rick Veitch, the characters first appeared in The Sentry #1.",
+                date = currentDate
             ),
             Note(
                 id = 2L,
                 title = "Man of tomorrow",
-                note = "Superman is a superhero created by writer Jerry Siegel and artist Joe Shuster, first appearing in issue #1 of Action Comics, published in the United States on April 18, 1938.",
-                date = LocalDate.now()
+                content = "Superman is a superhero created by writer Jerry Siegel and artist Joe Shuster, first appearing in issue #1 of Action Comics, published in the United States on April 18, 1938.",
+                date = currentDate
             ),
         )
     }
@@ -125,7 +131,7 @@ fun CardBookMark(bookMark: Note){
 
 
                 Text(
-                    text = "${bookMark.note}...",
+                    text = "${bookMark.content}...",
                     maxLines = 3
                 )
             }
