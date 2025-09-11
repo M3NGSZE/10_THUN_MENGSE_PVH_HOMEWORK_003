@@ -11,4 +11,13 @@ class NoteRepository(private val noteDao: NoteDao) {
     }
     fun getAllNotes(): Flow<MutableList<Note>> = noteDao.selectAllNotes()
     fun getAllBookMark(): Flow<MutableList<Note>> = noteDao.selectAllBookMark()
+
+    suspend fun addBookMark(id: Long) {
+        noteDao.updateBookMark(id)
+    }
+
+    suspend fun removeBookMark(id: Long) {
+        noteDao.removeBookMark(id)
+    }
+
 }

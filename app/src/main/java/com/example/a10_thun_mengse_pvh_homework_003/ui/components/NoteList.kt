@@ -22,10 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,13 +50,16 @@ fun NoteList(noteViewModel: NoteViewModel){
             .padding(start = 10.dp, end = 10.dp)
     ) {
         items(noted, key = {it -> it.id}){
-            it -> ColumnNote(it)
+            it -> ColumnNote(it, noteViewModel)
         }
     }
 }
 
 @Composable
-fun ColumnNote(item: Note){
+fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
+
+    val markTint = if (item.mark) Color(0xFFFD5722) else Color(0xFF1D1B20)
+
     Card (
         modifier = Modifier
             .padding(10.dp)
@@ -74,12 +81,14 @@ fun ColumnNote(item: Note){
                 )
 
                 IconButton(
-                    onClick = {}
+                    onClick = {
+                        noteViewModel.addBookMark(item.id)
+                    }
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Bookmarks,
                         contentDescription = "Bookmark",
-
+                        tint = markTint
                         )
                 }
             }
@@ -93,7 +102,7 @@ fun ColumnNote(item: Note){
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "${item.date}",
+                text = item.date,
             )
         }
     }

@@ -10,7 +10,14 @@ class NoteViewModel(private val noteRepository: NoteRepository): ViewModel(){
     fun insertNote(note: Note) = viewModelScope.launch {
         noteRepository.insertNote(note)
     }
-
     fun getAllNotes() = noteRepository.getAllNotes()
     fun getAllBookMark() = noteRepository.getAllBookMark()
+
+    fun addBookMark(id: Long) = viewModelScope.launch{
+        noteRepository.addBookMark(id)
+    }
+
+    fun removeBookMark(id: Long) = viewModelScope.launch {
+        noteRepository.removeBookMark(id)
+    }
 }
