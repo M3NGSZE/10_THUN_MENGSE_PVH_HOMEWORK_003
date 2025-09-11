@@ -19,6 +19,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -35,24 +37,7 @@ import java.time.LocalDate
 @Composable
 fun NoteList(noteViewModel: NoteViewModel){
 
-    val currentDate = dateConverter()
-
-    val noted = remember {
-        mutableStateListOf(
-            Note(
-                id = 1L,
-                title = "Sentry Project",
-                content = "The Sentry and The Void are respectively a superhero and supervillain appearing in American comic books published by Marvel Comics. Created by Paul Jenkins and Jae Lee, with uncredited conceptual contributions by Rick Veitch, the characters first appeared in The Sentry #1.",
-                date = currentDate
-            ),
-            Note(
-                id = 2L,
-                title = "Man of tomorrow",
-                content = "Superman is a superhero created by writer Jerry Siegel and artist Joe Shuster, first appearing in issue #1 of Action Comics, published in the United States on April 18, 1938.",
-                date = currentDate
-            ),
-        )
-    }
+    val noted by noteViewModel.getAllNotes().collectAsState(initial = emptyList())
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
