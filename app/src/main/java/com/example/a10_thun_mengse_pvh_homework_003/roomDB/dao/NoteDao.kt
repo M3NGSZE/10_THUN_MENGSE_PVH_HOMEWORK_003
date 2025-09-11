@@ -3,7 +3,6 @@ package com.example.a10_thun_mengse_pvh_homework_003.roomDB.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
 import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
 import kotlinx.coroutines.flow.Flow
 

@@ -1,7 +1,6 @@
 package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,10 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,52 +32,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a10_thun_mengse_pvh_homework_003.R
-import com.example.a10_thun_mengse_pvh_homework_003.helper.dateConverter
 import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
 import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookMark(noteViewModel: NoteViewModel){
 
     val bookMarkNote by noteViewModel.getAllBookMark().collectAsState(initial = emptyList())
 
-//    if (!bookMarkNote.isEmpty()){
-//        isShow(true)
-//    }else{
-//        isShow(false)
-//    }
-
-//    val currentDate = dateConverter()
-//
-//    val bookMarkNote = remember {
-//
-//        mutableStateListOf(
-//            Note(
-//                id = 1L,
-//                title = "Sentry Project",
-//                content = "The Sentry and The Void are respectively a superhero and supervillain appearing in American comic books published by Marvel Comics. Created by Paul Jenkins and Jae Lee, with uncredited conceptual contributions by Rick Veitch, the characters first appeared in The Sentry #1.",
-//                date = currentDate
-//            ),
-//            Note(
-//                id = 2L,
-//                title = "Man of tomorrow",
-//                content = "Superman is a superhero created by writer Jerry Siegel and artist Joe Shuster, first appearing in issue #1 of Action Comics, published in the United States on April 18, 1938.",
-//                date = currentDate
-//            ),
-//        )
-//    }
-
     LazyRow {
         items(bookMarkNote, key = {it -> it.id}){
-            item -> CardBookMark(item)
+            item -> CardBookMark(item, noteViewModel)
         }
     }
 }
 
 @Composable
-fun CardBookMark(bookMark: Note){
+fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel){
+
     Card (
         modifier = Modifier
             .padding(16.dp)
@@ -109,9 +76,7 @@ fun CardBookMark(bookMark: Note){
                     modifier = Modifier.size(90.dp)
                 )
             }
-            Column (
-
-            ){
+            Column {
                 Row (
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -125,7 +90,7 @@ fun CardBookMark(bookMark: Note){
 
                     IconButton(
                         onClick = {
-
+                            noteViewModel.removeBookMark(bookMark.id)
                         }
                     ) {
                         Icon(
@@ -137,8 +102,6 @@ fun CardBookMark(bookMark: Note){
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
-
-
 
                 Text(
                     text = "${bookMark.content}...",

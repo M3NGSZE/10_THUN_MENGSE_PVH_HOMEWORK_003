@@ -20,7 +20,6 @@ import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 @Composable
 fun HomeScreen(noteViewModel: NoteViewModel){
 
-    var title by remember { mutableStateOf("") }
     var show by remember {mutableStateOf(false)}
     var showDel by remember {mutableStateOf(false)}
 
