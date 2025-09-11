@@ -23,7 +23,6 @@ fun HomeScreen(noteViewModel: NoteViewModel){
     var title by remember { mutableStateOf("") }
     var show by remember {mutableStateOf(false)}
     var showDel by remember {mutableStateOf(false)}
-    var bookMark by remember { mutableStateOf(true) }
 
     Scaffold (
         topBar = {
@@ -47,9 +46,7 @@ fun HomeScreen(noteViewModel: NoteViewModel){
                 PopUpDel{showDel = it}
             }
 
-            if (bookMark){
-                BookMark()
-            }
+            BookMark(noteViewModel)
 
             NoteList(noteViewModel)
 

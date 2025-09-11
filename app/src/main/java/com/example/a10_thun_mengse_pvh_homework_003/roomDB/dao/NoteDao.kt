@@ -14,4 +14,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM notes")
     fun selectAllNotes(): Flow<MutableList<Note>>
+
+    @Query("SELECT * FROM notes Where mark = 1")
+    fun selectAllBookMark(): Flow<MutableList<Note>>
 }

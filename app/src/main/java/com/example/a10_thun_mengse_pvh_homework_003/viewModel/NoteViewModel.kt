@@ -12,4 +12,5 @@ class NoteViewModel(private val noteRepository: NoteRepository): ViewModel(){
     }
 
     fun getAllNotes() = noteRepository.getAllNotes()
+    fun getAllBookMark() = noteRepository.getAllBookMark()
 }
