@@ -20,4 +20,6 @@ class NoteViewModel(private val noteRepository: NoteRepository): ViewModel(){
     fun removeBookMark(id: Long) = viewModelScope.launch {
         noteRepository.removeBookMark(id)
     }
+
+    fun getNoteBId(id: Long) = noteRepository.getNoteById(id)
 }

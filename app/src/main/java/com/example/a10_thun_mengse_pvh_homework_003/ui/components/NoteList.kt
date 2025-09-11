@@ -1,5 +1,6 @@
 package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +47,10 @@ fun NoteList(noteViewModel: NoteViewModel){
         items(noted, key = {it -> it.id}){
             it -> ColumnNote(it, noteViewModel)
         }
+
+//        item {
+//            MyBottomSheet(noteViewModel)
+//        }
     }
 }
 
@@ -50,10 +58,14 @@ fun NoteList(noteViewModel: NoteViewModel){
 fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
 
     val markTint = if (item.mark) Color(0xFFFD5722) else Color(0xFF1D1B20)
+    var isShow by remember { mutableStateOf(false) }
 
     Card (
         modifier = Modifier
             .padding(10.dp)
+            .clickable{
+                isShow = !isShow
+            }
     ){
         Column (
             modifier = Modifier
@@ -101,5 +113,7 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
             )
         }
     }
+
+    MyBottomSheet(noteViewModel, isShow)
 
 }

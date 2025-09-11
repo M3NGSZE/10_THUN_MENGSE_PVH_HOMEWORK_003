@@ -15,12 +15,15 @@ interface NoteDao {
     @Query("SELECT * FROM notes")
     fun selectAllNotes(): Flow<MutableList<Note>>
 
-    @Query("SELECT * FROM notes Where mark = 1")
+    @Query("SELECT * FROM notes WHERE mark = 1")
     fun selectAllBookMark(): Flow<MutableList<Note>>
 
-    @Query("Update notes set mark = 1 Where id = :id")
+    @Query("UPDATE notes SET mark = 1 WHERE id = :id")
     suspend fun updateBookMark(id: Long): Int
 
-    @Query("Update notes set mark = 0 Where id = :id")
+    @Query("UPDATE notes SET mark = 0 WHERE id = :id")
     suspend fun removeBookMark(id: Long): Int
+
+    @Query("SELECT * FROM notes Where id = :id")
+    fun selectById(id: Long): Flow<Note>
 }

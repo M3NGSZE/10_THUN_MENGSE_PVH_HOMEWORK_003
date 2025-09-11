@@ -20,4 +20,6 @@ class NoteRepository(private val noteDao: NoteDao) {
         noteDao.removeBookMark(id)
     }
 
+    fun getNoteById(id: Long): Flow<Note> = noteDao.selectById(id)
+
 }
