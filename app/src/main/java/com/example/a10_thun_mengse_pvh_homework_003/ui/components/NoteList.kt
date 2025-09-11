@@ -82,7 +82,11 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
 
                 IconButton(
                     onClick = {
-                        noteViewModel.addBookMark(item.id)
+                        if (item.mark){
+                            noteViewModel.removeBookMark(item.id)
+                        }else{
+                            noteViewModel.addBookMark(item.id)
+                        }
                     }
                 ) {
                     Icon(
