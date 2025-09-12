@@ -1,6 +1,10 @@
 package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +28,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,15 +48,22 @@ fun BookMark(noteViewModel: NoteViewModel){
 
     val bookMarkNote by noteViewModel.getAllBookMark().collectAsState(initial = emptyList())
 
-    LazyRow {
-        items(bookMarkNote, key = {it -> it.id}){
-            item -> CardBookMark(item, noteViewModel)
+//    LazyRow {
+//        items(bookMarkNote, key = {it -> it.id}){
+//            item -> CardBookMark(item, noteViewModel)
+//        }
+//    }
+
+    Row (modifier = Modifier.basicMarquee().padding(5.dp, bottom = 0.dp, top = 5.dp)){
+        bookMarkNote.forEach { note   ->
+                CardBookMark(note, noteViewModel)
+            }
         }
+
     }
-}
 
 @Composable
-fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel){
+fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel) {
 
     val images = listOf(
         R.drawable.sentry,
@@ -60,25 +73,25 @@ fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel){
         R.drawable.ic_launcher_foreground
     )
 
-    val randomImage = remember { images.random() }
+    val randomImage = remember(bookMark.id) { images.random() }
 
-    Card (
+    Card(
         modifier = Modifier
             .padding(16.dp)
             .width(400.dp)
             .height(150.dp)
-    ){
-        Row (
+    ) {
+        Row(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(end = 16.dp)
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .width(100.dp)
                     .fillMaxHeight(),
                 contentAlignment = Alignment.Center
-            ){
+            ) {
                 Image(
                     painter = painterResource(id = randomImage),
                     contentDescription = bookMark.title,
@@ -86,11 +99,11 @@ fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel){
                 )
             }
             Column {
-                Row (
+                Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-                ){
+                ) {
                     Text(
                         text = bookMark.title,
                         fontWeight = FontWeight.Medium,
@@ -106,7 +119,7 @@ fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel){
                             imageVector = Icons.Rounded.Bookmarks,
                             contentDescription = "bookmark",
                             tint = Color(0xFFFF5722),
-                            )
+                        )
                     }
                 }
 
@@ -120,4 +133,5 @@ fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel){
             }
         }
     }
+
 }
