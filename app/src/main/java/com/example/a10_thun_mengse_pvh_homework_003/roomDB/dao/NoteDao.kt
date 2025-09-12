@@ -1,6 +1,7 @@
 package com.example.a10_thun_mengse_pvh_homework_003.roomDB.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -33,7 +34,14 @@ interface NoteDao {
     @Query("UPDATE NOTES SET title = :title, content = :content, date = :date Where id = :id")
     suspend fun updateById(id: Long, title: String, content: String, date: String): Int
 
+    // using this if we pass the whole object
     @Update
     suspend fun updateNote(note: Note)
+
+    @Delete
+    suspend fun deleteById(notes: Note)
+
+    @Query("DELETE FROM notes WHERE id = :id")
+    suspend fun deleteNoteById(id: Long)
 
 }

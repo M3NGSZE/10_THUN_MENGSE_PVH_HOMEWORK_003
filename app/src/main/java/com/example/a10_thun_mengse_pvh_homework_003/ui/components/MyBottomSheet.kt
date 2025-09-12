@@ -9,10 +9,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.DeleteOutline
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,7 +44,13 @@ import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, getIsShow: (Boolean) -> Unit){
+fun MyBottomSheet(
+    noteViewModel: NoteViewModel,
+    isShow: Boolean,
+    noteId: Long,
+    getIsDelete:(Boolean) -> Unit,
+    getIsShow: (Boolean) -> Unit
+){
     var showSheet = isShow
     val sheetState = rememberModalBottomSheetState()
 
@@ -56,6 +67,9 @@ fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, g
 
     var edit by remember { mutableStateOf(false) }
 
+    var isDelete by remember {mutableStateOf(false)}
+//    var delNoteId by remember {mutableStateOf(0L)}
+
     if (showSheet){
         ModalBottomSheet(
             onDismissRequest = {
@@ -68,6 +82,7 @@ fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, g
 
                 var editTitle by remember { mutableStateOf(noteById?.title?: "") }
                 var editContent by remember { mutableStateOf(noteById!!.content) }
+                val passNoted = Note(noteId, editTitle, editContent, dateConverter(), noteById!!.mark)
 
 
                 Column (
@@ -117,6 +132,9 @@ fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, g
                             color = Color.Gray,
                         )
                     }else{
+
+                        var deleteAlert by remember { mutableStateOf(false) }
+
                         Row (
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
@@ -127,12 +145,16 @@ fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, g
                                     .clip(CircleShape)
                                     .background(Color(0xFFFD5722)),
                                 onClick = {
-                                    edit = !edit
+//                                    deleteAlert = !deleteAlert
+//                                    showSheet = false
+                                    getIsDelete(true)
+                                    getIsShow(false)
+//                                    noteViewModel.deleteById(noteId)
                                 }
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.Delete,
-                                    contentDescription = "edit",
+                                    contentDescription = "delete",
                                     tint = Color.White
                                 )
                             }
@@ -146,7 +168,8 @@ fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, g
 //                                    noteViewModel.updateById(noteId, editTitle, editContent,
 //                                        dateConverter()
 //                                    )
-                                    noteViewModel.updateNoe(Note(noteId, editTitle, editContent, dateConverter(), noteById!!.mark))
+//                                    noteViewModel.updateNoe(Note(noteId, editTitle, editContent, dateConverter(), noteById!!.mark))
+                                    noteViewModel.updateNoe(passNoted)
                                 }
                             ) {
                                 Icon(
@@ -156,7 +179,6 @@ fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, g
                                 )
                             }
                         }
-
 
                         Spacer(modifier = Modifier.height(20.dp))
 
@@ -182,5 +204,58 @@ fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, g
         }
     }
 
-
 }
+
+//    if(isDelete){
+//        noteViewModel.deleteById(noteId)
+//        isDelete = !isDelete
+//    }
+
+
+//                            if (deleteAlert){
+//                                AlertDialog(
+//                                    onDismissRequest = {},
+//                                    icon = {
+//                                        Icon(
+//                                            imageVector = Icons.Rounded.Delete,
+//                                            contentDescription = "",
+//                                            tint = Color(0xFFFD5722),
+//                                            modifier = Modifier.size(60.dp)
+//                                        )
+//                                    },
+//                                    text = {
+//                                        Text(
+//                                            text = "Are you sure, you want to delete this",
+//                                            fontSize = 16.sp
+//                                        )
+//                                    },
+//                                    confirmButton = {
+//                                        Button(
+//                                            onClick = {
+//                                                showSheet = false
+//                                                getIsDelete(true)
+//                                                getIsShow(false)
+////                                                isDelete = !isDelete
+//                                            },
+//                                            colors = ButtonDefaults.buttonColors(
+//                                                containerColor = Color(0xFFFD5722)
+//                                            )
+//                                        ) {
+//                                            Text("Delete")
+//                                        }
+//                                    },
+//                                    dismissButton = {
+//                                        Button(
+//                                            onClick = {
+////                                                edit = !edit
+//                                                deleteAlert = !deleteAlert
+//                                                      },
+//                                            colors = ButtonDefaults.buttonColors(
+//                                                containerColor = Color(0xFF3F51B5)
+//                                            )
+//                                        ) {
+//                                            Text(text = "Cancel")
+//                                        }
+//                                    }
+//                                )
+//                            }

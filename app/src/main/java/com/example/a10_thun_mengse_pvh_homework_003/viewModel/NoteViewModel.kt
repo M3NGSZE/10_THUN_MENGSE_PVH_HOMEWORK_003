@@ -10,7 +10,9 @@ class NoteViewModel(private val noteRepository: NoteRepository): ViewModel(){
     fun insertNote(note: Note) = viewModelScope.launch {
         noteRepository.insertNote(note)
     }
+
     fun getAllNotes() = noteRepository.getAllNotes()
+
     fun getAllBookMark() = noteRepository.getAllBookMark()
 
     fun addBookMark(id: Long) = viewModelScope.launch{
@@ -29,5 +31,18 @@ class NoteViewModel(private val noteRepository: NoteRepository): ViewModel(){
 
     fun updateNoe(note: Note) = viewModelScope.launch {
         noteRepository.updateNote(note)
+    }
+
+    fun deleteNote(note: Note) = viewModelScope.launch {
+        noteRepository.deleteNote(note)
+    }
+
+    fun deleteById(id: Long) = viewModelScope.launch {
+        try {
+            noteRepository.deleteById(id)
+//            Log.d("NoteViewModel", "Successfully deleted note with id: $id")
+        } catch (e: Exception) {
+//            Log.e("NoteViewModel", "Error deleting note with id: $id", e)
+        }
     }
 }

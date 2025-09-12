@@ -20,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +37,7 @@ import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
 import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
 @Composable
-fun NoteList(noteViewModel: NoteViewModel){
+fun NoteList(noteViewModel: NoteViewModel, ){
 
     val noted by noteViewModel.getAllNotes().collectAsState(initial = emptyList())
 
@@ -61,6 +62,11 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
 
     val markTint = if (item.mark) Color(0xFFFD5722) else Color(0xFF1D1B20)
     var isShow by remember { mutableStateOf(false) }
+    var isDeleting by remember { mutableStateOf(false) }
+
+    if (isDeleting) {
+        return
+    }
 
     Card (
         modifier = Modifier
@@ -115,6 +121,39 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
             )
         }
     }
-    MyBottomSheet(noteViewModel, isShow, item.id){isShow = it}
+
+//    var isDelete by remember {mutableStateOf(false)}
+//    var delNoteId by remember {mutableStateOf(0L)}
+
+//    MyBottomSheet(noteViewModel, isShow, item.id, {isDeleting = it}){isShow = it}
+
+    MyBottomSheet(
+        noteViewModel = noteViewModel,
+        isShow = isShow,
+        noteId = item.id,
+        getIsDelete = { shouldDelete ->
+            if (shouldDelete) {
+                isDeleting = true
+                noteViewModel.deleteById(item.id)
+            }
+        },
+        getIsShow = { showState ->
+            isShow = showState
+        }
+    )
+
+//    Log.d("delNoteId1","$delNoteId")
+//
+////    if(isDelete){
+////        Log.d("jinhot","if it true this one is open")
+////        noteViewModel.deleteById(item.id)
+////        isDelete = false
+////    }
+//    LaunchedEffect (isDelete) {
+//        if (isDelete) {
+//            noteViewModel.deleteById(item.id)
+//            // Don't reset isDelete here - let the recomposition handle it
+//        }
+//    }
 
 }

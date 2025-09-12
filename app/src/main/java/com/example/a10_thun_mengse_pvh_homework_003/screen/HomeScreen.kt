@@ -23,6 +23,8 @@ fun HomeScreen(noteViewModel: NoteViewModel){
 
     var show by remember {mutableStateOf(false)}
     var showDel by remember {mutableStateOf(false)}
+    var deleteOne by remember {mutableStateOf(false)}
+
 
     Scaffold (
         topBar = {
@@ -50,9 +52,11 @@ fun HomeScreen(noteViewModel: NoteViewModel){
 
             NoteList(noteViewModel)
 
+//            if (deleteOne){
+//                noteViewModel.deleteById(1)
+//            }
+
 //            MyBottomSheet(noteViewModel)
-
-
         }
     }
 }
