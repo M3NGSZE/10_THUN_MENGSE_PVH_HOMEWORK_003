@@ -40,4 +40,10 @@ class NoteViewModel(private val noteRepository: NoteRepository): ViewModel(){
     fun deleteById(id: Long) = viewModelScope.launch {
         noteRepository.deleteById(id)
     }
+
+    fun deleteAll() {
+        viewModelScope.launch {
+            noteRepository.deleteAllNote()
+        }
+    }
 }

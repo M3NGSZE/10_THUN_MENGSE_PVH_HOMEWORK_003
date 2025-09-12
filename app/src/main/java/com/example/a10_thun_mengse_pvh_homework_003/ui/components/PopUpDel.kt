@@ -11,9 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
 @Composable
-fun PopUpDel(isShow: (Boolean) -> Unit){
+fun PopUpDel(noteViewModel: NoteViewModel, isShow: (Boolean) -> Unit, ){
 
     AlertDialog(
         modifier = Modifier.width(330.dp),
@@ -39,11 +40,11 @@ fun PopUpDel(isShow: (Boolean) -> Unit){
         },
         confirmButton = {
             MyButton(
-                title ="Save",
+                title ="Delete",
                 textColor = 0xFFFF5722,
                 isShow = {  isShow(it) }
             ){
-
+                    noteViewModel.deleteAll()
             }
         },
         dismissButton = {

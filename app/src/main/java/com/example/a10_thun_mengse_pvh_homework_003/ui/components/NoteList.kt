@@ -70,11 +70,12 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
     Card (
         modifier = Modifier
             .padding(10.dp)
-            .clickable{
-                isShow = !isShow
-            }
+//            .clickable{
+//                isShow = !isShow
+//            }
             .pointerInput(Unit){
                 detectTapGestures(
+                    onPress = {isShow = !isShow},
                     onLongPress = {
                         noteViewModel.deleteById(item.id)
                     }

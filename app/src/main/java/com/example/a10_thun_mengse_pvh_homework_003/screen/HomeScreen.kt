@@ -30,7 +30,8 @@ fun HomeScreen(noteViewModel: NoteViewModel){
         topBar = {
             Topbar(
                 isShow = { show = true },
-                another = { showDel = true }
+                another = { showDel = true },
+                noteViewModel
             )
         }
     ) {paddingValues ->
@@ -45,7 +46,7 @@ fun HomeScreen(noteViewModel: NoteViewModel){
             }
 
             if (showDel){
-                PopUpDel{showDel = it}
+                PopUpDel(noteViewModel){showDel = it}
             }
 
             BookMark(noteViewModel)

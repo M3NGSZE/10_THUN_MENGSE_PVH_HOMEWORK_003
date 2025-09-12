@@ -27,12 +27,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a10_thun_mengse_pvh_homework_003.R
+import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Topbar(
     isShow: () -> Unit,
-    another: () -> Unit
+    another: () -> Unit,
+    noteViewModel: NoteViewModel
 ){
     TopAppBar(
         title = {
