@@ -22,4 +22,6 @@ class NoteRepository(private val noteDao: NoteDao) {
 
     fun getNoteById(id: Long): Flow<Note> = noteDao.selectById(id)
 
+    suspend fun updateById(id: Long, title: String, content: String, date: String) = noteDao.updateById(id, title, content, date)
+
 }

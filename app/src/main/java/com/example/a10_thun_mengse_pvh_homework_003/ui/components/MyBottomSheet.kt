@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.a10_thun_mengse_pvh_homework_003.helper.dateConverter
 import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -141,6 +142,9 @@ fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, g
                                     .background(Color(0x583F51B5)),
                                 onClick = {
                                     edit = !edit
+                                    noteViewModel.updateById(noteId, editTitle, editContent,
+                                        dateConverter()
+                                    )
                                 }
                             ) {
                                 Icon(

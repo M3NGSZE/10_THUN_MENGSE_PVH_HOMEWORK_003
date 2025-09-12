@@ -26,4 +26,10 @@ interface NoteDao {
 
     @Query("SELECT * FROM notes Where id = :id")
     fun selectById(id: Long): Flow<Note>
+
+    @Query("UPDATE NOTES SET title = :title, content = :content, date = :date Where id = :id")
+    suspend fun updateById(id: Long, title: String, content: String, date: String): Int
+
+//    @Query("UPDATE NOTES SET title = :title, content = :{note.id}, date = :date Where id = :id")
+//    fun updateById(id: Long, title: String, content: String, date: String, note: Note): Int
 }

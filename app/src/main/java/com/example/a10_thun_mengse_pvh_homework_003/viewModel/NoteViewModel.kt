@@ -22,4 +22,8 @@ class NoteViewModel(private val noteRepository: NoteRepository): ViewModel(){
     }
 
     fun getNoteBId(id: Long) = noteRepository.getNoteById(id)
+
+    fun updateById(id: Long, title: String, content: String, date: String) = viewModelScope.launch {
+        noteRepository.updateById(id, title, content, date)
+    }
 }
