@@ -2,6 +2,8 @@ package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
 import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Bookmarks
 import androidx.compose.material3.Card
@@ -29,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -41,19 +47,15 @@ fun NoteList(noteViewModel: NoteViewModel, ){
 
     val noted by noteViewModel.getAllNotes().collectAsState(initial = emptyList())
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(2),
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp)
+            .padding(start = 10.dp, end = 10.dp),
     ) {
         items(noted, key = {it -> it.id}){
             it -> ColumnNote(it, noteViewModel)
         }
-
-//        item {
-//            MyBottomSheet(noteViewModel)
-//        }
     }
 }
 
@@ -62,12 +64,8 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
 
     val markTint = if (item.mark) Color(0xFFFD5722) else Color(0xFF1D1B20)
     var isShow by remember { mutableStateOf(false) }
-    var isDeleting by remember { mutableStateOf(false) }
     var isDelete by remember { mutableStateOf(false) }
 
-    if (isDeleting) {
-        return
-    }
 
     Card (
         modifier = Modifier
@@ -75,6 +73,14 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
             .clickable{
                 isShow = !isShow
             }
+            .pointerInput(Unit){
+                detectTapGestures(
+                    onLongPress = {
+                        noteViewModel.deleteById(item.id)
+                    }
+                )
+            }
+
     ){
         Column (
             modifier = Modifier
@@ -123,40 +129,20 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
         }
     }
 
-//    var isDelete by remember {mutableStateOf(false)}
-//    var delNoteId by remember {mutableStateOf(0L)}
-
-//    MyBottomSheet(noteViewModel, isShow, item.id, {isDeleting = it}){isShow = it}
 
     MyBottomSheet(
         noteViewModel = noteViewModel,
         isShow = isShow,
         noteId = item.id,
-//        getIsDelete = { shouldDelete ->
-//            if (shouldDelete) {
-//                isDeleting = true
-//                noteViewModel.deleteById(item.id)
-//            }
-        getIsDelete = {isDeleting = it
-        },
+        getIsDelete = {isDelete = it },
         getIsShow = { showState ->
             isShow = showState
         }
     )
 
-//    Log.d("delNoteId1","$delNoteId")
-//
     if(isDelete){
         Log.d("jinhot","if it true this one is open")
+        Log.d("jinhot","${item.id}")
         noteViewModel.deleteById(item.id)
     }
-
-    isDelete = false
-//    LaunchedEffect (isDelete) {
-//        if (isDelete) {
-//            noteViewModel.deleteById(item.id)
-//            // Don't reset isDelete here - let the recomposition handle it
-//        }
-//    }
-
 }

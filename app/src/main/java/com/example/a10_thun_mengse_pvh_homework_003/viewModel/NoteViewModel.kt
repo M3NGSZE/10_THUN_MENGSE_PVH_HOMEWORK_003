@@ -39,11 +39,5 @@ class NoteViewModel(private val noteRepository: NoteRepository): ViewModel(){
 
     fun deleteById(id: Long) = viewModelScope.launch {
         noteRepository.deleteById(id)
-//        try {
-//            noteRepository.deleteById(id)
-////            Log.d("NoteViewModel", "Successfully deleted note with id: $id")
-//        } catch (e: Exception) {
-////            Log.e("NoteViewModel", "Error deleting note with id: $id", e)
-//        }
     }
 }

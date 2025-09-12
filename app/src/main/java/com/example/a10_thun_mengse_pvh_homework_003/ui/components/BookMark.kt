@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,14 +52,21 @@ fun BookMark(noteViewModel: NoteViewModel){
 @Composable
 fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel){
 
+    val images = listOf(
+        R.drawable.sentry,
+        R.drawable.sze,
+        R.drawable.toji,
+        R.drawable.aang,
+        R.drawable.ic_launcher_foreground
+    )
+
+    val randomImage = remember { images.random() }
+
     Card (
         modifier = Modifier
             .padding(16.dp)
             .width(400.dp)
             .height(150.dp)
-
-
-
     ){
         Row (
             modifier = Modifier
@@ -72,7 +80,7 @@ fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel){
                 contentAlignment = Alignment.Center
             ){
                 Image(
-                    painter = painterResource(id = R.drawable.sentry),
+                    painter = painterResource(id = randomImage),
                     contentDescription = bookMark.title,
                     modifier = Modifier.size(90.dp)
                 )
