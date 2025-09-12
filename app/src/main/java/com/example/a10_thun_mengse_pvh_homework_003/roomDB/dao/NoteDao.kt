@@ -27,7 +27,7 @@ interface NoteDao {
     suspend fun removeBookMark(id: Long): Int
 
     @Query("SELECT * FROM notes Where id = :id")
-    fun selectById(id: Long): Flow<Note>
+    fun selectById(id: Long): Flow<Note?>
 
 
     // using this if we want to update specific field

@@ -63,6 +63,7 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
     val markTint = if (item.mark) Color(0xFFFD5722) else Color(0xFF1D1B20)
     var isShow by remember { mutableStateOf(false) }
     var isDeleting by remember { mutableStateOf(false) }
+    var isDelete by remember { mutableStateOf(false) }
 
     if (isDeleting) {
         return
@@ -131,11 +132,12 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
         noteViewModel = noteViewModel,
         isShow = isShow,
         noteId = item.id,
-        getIsDelete = { shouldDelete ->
-            if (shouldDelete) {
-                isDeleting = true
-                noteViewModel.deleteById(item.id)
-            }
+//        getIsDelete = { shouldDelete ->
+//            if (shouldDelete) {
+//                isDeleting = true
+//                noteViewModel.deleteById(item.id)
+//            }
+        getIsDelete = {isDeleting = it
         },
         getIsShow = { showState ->
             isShow = showState
@@ -144,11 +146,12 @@ fun ColumnNote(item: Note, noteViewModel: NoteViewModel){
 
 //    Log.d("delNoteId1","$delNoteId")
 //
-////    if(isDelete){
-////        Log.d("jinhot","if it true this one is open")
-////        noteViewModel.deleteById(item.id)
-////        isDelete = false
-////    }
+    if(isDelete){
+        Log.d("jinhot","if it true this one is open")
+        noteViewModel.deleteById(item.id)
+    }
+
+    isDelete = false
 //    LaunchedEffect (isDelete) {
 //        if (isDelete) {
 //            noteViewModel.deleteById(item.id)

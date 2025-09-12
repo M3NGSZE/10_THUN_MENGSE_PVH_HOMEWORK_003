@@ -80,9 +80,11 @@ fun MyBottomSheet(
         ) {
             if (noteById != null){
 
-                var editTitle by remember { mutableStateOf(noteById?.title?: "") }
-                var editContent by remember { mutableStateOf(noteById!!.content) }
-                val passNoted = Note(noteId, editTitle, editContent, dateConverter(), noteById!!.mark)
+                var editTitle by remember { mutableStateOf(noteById?.title ?: "") }
+                var editContent by remember { mutableStateOf(noteById?.content ?: "") }
+                val passNoted = noteById?.let { current ->
+                    Note(noteId, editTitle, editContent, dateConverter(), current.mark)
+                }
 
 
                 Column (
@@ -109,7 +111,7 @@ fun MyBottomSheet(
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Text(
-                            text = noteById?.title?: "",
+                            text = noteById?.title ?: "",
                             fontSize = 23.sp,
                             fontWeight = FontWeight.Medium
                         )
@@ -118,7 +120,7 @@ fun MyBottomSheet(
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
-                            text = noteById!!.date,
+                            text = noteById?.date ?: "",
                             fontWeight = FontWeight.Medium,
                             color = Color.Gray,
                             fontSize = 13.sp
@@ -127,7 +129,7 @@ fun MyBottomSheet(
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Text(
-                            text = noteById!!.content,
+                            text = noteById?.content ?: "",
                             fontWeight = FontWeight.Medium,
                             color = Color.Gray,
                         )
@@ -169,7 +171,9 @@ fun MyBottomSheet(
 //                                        dateConverter()
 //                                    )
 //                                    noteViewModel.updateNoe(Note(noteId, editTitle, editContent, dateConverter(), noteById!!.mark))
-                                    noteViewModel.updateNoe(passNoted)
+                                    passNoted?.let { safeNote ->
+                                        noteViewModel.updateNoe(safeNote)
+                                    }
                                 }
                             ) {
                                 Icon(
