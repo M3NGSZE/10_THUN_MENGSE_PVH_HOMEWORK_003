@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a10_thun_mengse_pvh_homework_003.helper.dateConverter
+import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
 import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -142,9 +143,10 @@ fun MyBottomSheet(noteViewModel: NoteViewModel, isShow: Boolean, noteId: Long, g
                                     .background(Color(0x583F51B5)),
                                 onClick = {
                                     edit = !edit
-                                    noteViewModel.updateById(noteId, editTitle, editContent,
-                                        dateConverter()
-                                    )
+//                                    noteViewModel.updateById(noteId, editTitle, editContent,
+//                                        dateConverter()
+//                                    )
+                                    noteViewModel.updateNoe(Note(noteId, editTitle, editContent, dateConverter(), noteById!!.mark))
                                 }
                             ) {
                                 Icon(

@@ -24,4 +24,5 @@ class NoteRepository(private val noteDao: NoteDao) {
 
     suspend fun updateById(id: Long, title: String, content: String, date: String) = noteDao.updateById(id, title, content, date)
 
+    suspend fun updateNote(note: Note) = noteDao.updateNote(note)
 }
