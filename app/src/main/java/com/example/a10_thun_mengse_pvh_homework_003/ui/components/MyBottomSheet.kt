@@ -147,17 +147,20 @@ fun MyBottomSheet(
                                     .clip(CircleShape)
                                     .background(Color(0xFFFD5722)),
                                 onClick = {
-//                                    deleteAlert = !deleteAlert
-//                                    showSheet = false
-                                    getIsDelete(true)
-                                    getIsShow(false)
-//                                    noteViewModel.deleteById(noteId)
+                                    deleteAlert = !deleteAlert
                                 }
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.Delete,
                                     contentDescription = "delete",
                                     tint = Color.White
+                                )
+                            }
+
+                            if (deleteAlert){
+                                AskDelete(
+                                    getDeleteAlert = {deleteAlert = it},
+                                    getIsDelete = { it -> getIsDelete(it)}
                                 )
                             }
 
@@ -210,56 +213,50 @@ fun MyBottomSheet(
 
 }
 
-//    if(isDelete){
-//        noteViewModel.deleteById(noteId)
-//        isDelete = !isDelete
-//    }
-
-
-//                            if (deleteAlert){
-//                                AlertDialog(
-//                                    onDismissRequest = {},
-//                                    icon = {
-//                                        Icon(
-//                                            imageVector = Icons.Rounded.Delete,
-//                                            contentDescription = "",
-//                                            tint = Color(0xFFFD5722),
-//                                            modifier = Modifier.size(60.dp)
-//                                        )
-//                                    },
-//                                    text = {
-//                                        Text(
-//                                            text = "Are you sure, you want to delete this",
-//                                            fontSize = 16.sp
-//                                        )
-//                                    },
-//                                    confirmButton = {
-//                                        Button(
-//                                            onClick = {
-//                                                showSheet = false
-//                                                getIsDelete(true)
-//                                                getIsShow(false)
-////                                                isDelete = !isDelete
-//                                            },
-//                                            colors = ButtonDefaults.buttonColors(
-//                                                containerColor = Color(0xFFFD5722)
-//                                            )
-//                                        ) {
-//                                            Text("Delete")
-//                                        }
-//                                    },
-//                                    dismissButton = {
-//                                        Button(
-//                                            onClick = {
-////                                                edit = !edit
-//                                                deleteAlert = !deleteAlert
-//                                                      },
-//                                            colors = ButtonDefaults.buttonColors(
-//                                                containerColor = Color(0xFF3F51B5)
-//                                            )
-//                                        ) {
-//                                            Text(text = "Cancel")
-//                                        }
-//                                    }
-//                                )
-//                            }
+@Composable
+fun AskDelete(
+    getDeleteAlert: (Boolean) -> Unit,
+    getIsDelete: (Boolean) -> Unit
+){
+    AlertDialog(
+        onDismissRequest = {},
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.Delete,
+                contentDescription = "",
+                tint = Color(0xFFFD5722),
+                modifier = Modifier.size(60.dp)
+            )
+        },
+        text = {
+            Text(
+                text = "Are you sure, you want to delete this",
+                fontSize = 16.sp
+            )
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    getIsDelete(true)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFFD5722)
+                )
+            ) {
+                Text("Delete")
+            }
+        },
+        dismissButton = {
+            Button(
+                onClick = {
+                    getDeleteAlert(false)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF3F51B5)
+                )
+            ) {
+                Text(text = "Cancel")
+            }
+        }
+    )
+}
