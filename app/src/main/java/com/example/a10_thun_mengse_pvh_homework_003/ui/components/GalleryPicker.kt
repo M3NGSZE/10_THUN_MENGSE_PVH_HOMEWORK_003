@@ -1,6 +1,7 @@
 package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,10 +24,15 @@ fun GalleryPicker() {
         }
     }
 
+
+
+
     // Button to open gallery
     Button (onClick = {
         galleryLauncher.launch("image/*") // mime type: only images
     }) {
         Text(text = "Pick Image from Gallery")
     }
+
+    Log.d("galleryLauncher","$galleryLauncher")
 }

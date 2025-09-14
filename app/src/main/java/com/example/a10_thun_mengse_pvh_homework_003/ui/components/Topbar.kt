@@ -1,8 +1,12 @@
 package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
+import android.net.Uri
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,13 +23,20 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.example.a10_thun_mengse_pvh_homework_003.R
 import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
@@ -34,7 +45,6 @@ import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 fun Topbar(
     isShow: () -> Unit,
     another: () -> Unit,
-    noteViewModel: NoteViewModel
 ){
     TopAppBar(
         title = {
@@ -43,10 +53,24 @@ fun Topbar(
                     .fillMaxWidth(0.7f),
                 verticalAlignment = Alignment.CenterVertically
             ){
+
+                var profile by remember { mutableStateOf<Uri?>(null) }
+                val context = LocalContext.current
+
+                val imagePicker = rememberLauncherForActivityResult (
+                    contract = ActivityResultContracts.GetContent()
+                ) {
+                    uri: Uri? -> profile = uri
+                }
+
                 Image(
-                    painter = painterResource(R.drawable.sze),
+                    painter = if (profile == null) painterResource(id = R.drawable.sentry) else rememberAsyncImagePainter(profile),
                     contentDescription = "sze",
-                    modifier = Modifier.clip(CircleShape)
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable{
+                            imagePicker.launch("image/*")
+                        }
                 )
 
                 Spacer(modifier = Modifier.width(15.dp))
@@ -77,7 +101,6 @@ fun Topbar(
 
             IconButton(
                 onClick = {
-//                    another(true)
                     another()
                     Log.d("trash","$isShow")
                 } ,

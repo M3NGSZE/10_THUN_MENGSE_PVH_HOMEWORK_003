@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.BookMark
+import com.example.a10_thun_mengse_pvh_homework_003.ui.components.GalleryPicker
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.MyBottomSheet
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.NoteList
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.PopUpDel
@@ -31,7 +32,6 @@ fun HomeScreen(noteViewModel: NoteViewModel){
             Topbar(
                 isShow = { show = true },
                 another = { showDel = true },
-                noteViewModel
             )
         }
     ) {paddingValues ->
@@ -52,6 +52,7 @@ fun HomeScreen(noteViewModel: NoteViewModel){
             BookMark(noteViewModel)
 
             NoteList(noteViewModel)
+
 
 //            if (deleteOne){
 //                noteViewModel.deleteById(1)
