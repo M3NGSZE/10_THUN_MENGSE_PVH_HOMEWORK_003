@@ -23,7 +23,6 @@ import androidx.compose.material.icons.rounded.Bookmarks
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,20 +31,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.util.lerp
 import com.example.a10_thun_mengse_pvh_homework_003.R
 import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
 import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 import kotlinx.coroutines.delay
-import kotlin.math.absoluteValue
 
 
 @Composable
@@ -57,7 +52,7 @@ fun NewBookMark(noteViewModel: NoteViewModel){
     LaunchedEffect(true) {
         if (true) {
             while (true) {
-                delay(3000L)
+                delay(2000L)
                 val nextPage = (pagerState.currentPage + 1) % bookMarkNote.size
                 pagerState.animateScrollToPage(nextPage)
             }
@@ -72,17 +67,12 @@ fun NewBookMark(noteViewModel: NoteViewModel){
         // Carousel pager
         HorizontalPager(
             state = pagerState,
-            contentPadding = PaddingValues(horizontal = 52.dp),
-//            pageSpacing = 16.dp,
+//            contentPadding = PaddingValues(end = 32.dp),
+//            contentPadding = PaddingValues(8.dp),
+            pageSpacing = 16.dp,
             modifier = Modifier
                 .fillMaxWidth()
         ) { page ->
-            val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
-            val scale = lerp(
-                start = 0.85f,
-                stop = 1f,
-                fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1f)
-            )
 
             CardBookMark1(
                 bookMark = bookMarkNote[page],
@@ -109,7 +99,7 @@ fun CardBookMark1(bookMark: Note, noteViewModel: NoteViewModel) {
     Card(
         modifier = Modifier
             .padding(16.dp)
-            .width(400.dp)
+//            .width(400.dp)
             .height(150.dp)
     ) {
         Row(
