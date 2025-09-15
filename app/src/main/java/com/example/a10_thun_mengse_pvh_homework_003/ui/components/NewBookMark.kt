@@ -1,13 +1,11 @@
 package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -17,53 +15,87 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Bookmarks
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.lerp
 import com.example.a10_thun_mengse_pvh_homework_003.R
 import com.example.a10_thun_mengse_pvh_homework_003.roomDB.entity.Note
 import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
+import kotlinx.coroutines.delay
+import kotlin.math.absoluteValue
+
 
 @Composable
-fun BookMark(noteViewModel: NoteViewModel){
+fun NewBookMark(noteViewModel: NoteViewModel){
 
     val bookMarkNote by noteViewModel.getAllBookMark().collectAsState(initial = emptyList())
+    val pagerState = rememberPagerState(pageCount = {bookMarkNote.size})
 
-//    LazyRow {
-//        items(bookMarkNote, key = {it -> it.id}){
-//            item -> CardBookMark(item, noteViewModel)
-//        }
-//    }
-
-    Row (modifier = Modifier.basicMarquee().padding(5.dp, bottom = 0.dp, top = 5.dp)){
-        bookMarkNote.forEach { note   ->
-                CardBookMark(note, noteViewModel)
+    LaunchedEffect(true) {
+        if (true) {
+            while (true) {
+                delay(3000L)
+                val nextPage = (pagerState.currentPage + 1) % bookMarkNote.size
+                pagerState.animateScrollToPage(nextPage)
             }
         }
-
     }
 
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Carousel pager
+        HorizontalPager(
+            state = pagerState,
+            contentPadding = PaddingValues(horizontal = 52.dp),
+//            pageSpacing = 16.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) { page ->
+            val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
+            val scale = lerp(
+                start = 0.85f,
+                stop = 1f,
+                fraction = 1f - pageOffset.absoluteValue.coerceIn(0f, 1f)
+            )
+
+            CardBookMark1(
+                bookMark = bookMarkNote[page],
+                noteViewModel = noteViewModel
+            )
+
+        }
+    }
+
+}
+
 @Composable
-fun CardBookMark(bookMark: Note, noteViewModel: NoteViewModel) {
+fun CardBookMark1(bookMark: Note, noteViewModel: NoteViewModel) {
 
     val images = listOf(
         R.drawable.sentry,

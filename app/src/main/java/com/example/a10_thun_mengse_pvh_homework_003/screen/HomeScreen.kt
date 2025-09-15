@@ -14,6 +14,7 @@ import com.example.a10_thun_mengse_pvh_homework_003.ui.components.BookMark
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.GalleryPicker
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.ImageCarousel
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.MyBottomSheet
+import com.example.a10_thun_mengse_pvh_homework_003.ui.components.NewBookMark
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.NoteList
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.PopUpDel
 import com.example.a10_thun_mengse_pvh_homework_003.ui.components.PopUpDialog
@@ -51,9 +52,11 @@ fun HomeScreen(noteViewModel: NoteViewModel){
                 PopUpDel(noteViewModel){showDel = it}
             }
 
-            ImageCarousel(imageSlide)
+//            ImageCarousel(imageSlide)
 
-            BookMark(noteViewModel)
+            NewBookMark(noteViewModel)
+
+//            BookMark(noteViewModel)
 
             NoteList(noteViewModel)
 
