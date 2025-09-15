@@ -1,5 +1,6 @@
 package com.example.a10_thun_mengse_pvh_homework_003.ui.components
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -24,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.a10_thun_mengse_pvh_homework_003.R
-import com.example.a10_thun_mengse_pvh_homework_003.viewModel.NoteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,10 +56,40 @@ fun Topbar(
                 var profile by remember { mutableStateOf<Uri?>(null) }
                 val context = LocalContext.current
 
+                val prefs = context.getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
+
+                // Save profile data
+                fun saveProfile(uri: Uri?) {
+                    prefs.edit()
+                        .putBoolean("has_profile", uri != null)
+                        .putString("profile_image_uri", uri?.toString())
+                        .apply()
+                }
+
+                // Load profile data
+                fun loadProfile(): Uri? {
+                    val uriString = prefs.getString("profile_image_uri", null)
+                    return uriString?.let { Uri.parse(it) }
+                }
+
+                // Load flag
+                fun hasProfile(): Boolean {
+                    return prefs.getBoolean("has_profile", false) // default false
+                }
+
+
+                val hasProfile = hasProfile()
                 val imagePicker = rememberLauncherForActivityResult (
                     contract = ActivityResultContracts.GetContent()
                 ) {
-                    uri: Uri? -> profile = uri
+                    uri: Uri? ->
+                    profile = uri
+                    saveProfile(uri)
+                }
+
+                // On first load (restore profile)
+                if (profile == null && prefs.getBoolean("has_profile", false)) {
+                    profile = loadProfile()
                 }
 
                 Image(
