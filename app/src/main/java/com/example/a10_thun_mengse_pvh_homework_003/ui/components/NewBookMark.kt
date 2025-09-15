@@ -47,6 +47,9 @@ import kotlinx.coroutines.delay
 fun NewBookMark(noteViewModel: NoteViewModel){
 
     val bookMarkNote by noteViewModel.getAllBookMark().collectAsState(initial = emptyList())
+
+    if (bookMarkNote.isEmpty()) return
+
     val pagerState = rememberPagerState(pageCount = {bookMarkNote.size})
 
     LaunchedEffect(true) {
